@@ -7,7 +7,7 @@ class CrontabLine < CrontabLineBase
   attr_accessor :user
   attr_reader :command
 
-  @@ENTRY_REGEX = /^([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+(.*)$/
+  @@ENTRY_REGEX = /^([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+)\s+([-\/,0-9*]+|mon|tue|wed|thu|fri|sat|sun)\s+(.*)$/
   @@MINUTE_GROUP_NUM = 1
   @@HOUR_GROUP_NUM = 2
   @@DAY_GROUP_NUM = 3
@@ -42,7 +42,7 @@ class CrontabLine < CrontabLineBase
       raise "I think you have a space in a crontab field (but I'm not very smart).  " +
            "Use 'create_by_hash()' instead to override me."
     end
-    md = @@ENTRY_REGEX.match(entry)
+    md = @@ENTRY_REGEX.match(entry.downcase)
     if md
       crontab = CrontabLine.new
       crontab.minute = md[@@MINUTE_GROUP_NUM]
