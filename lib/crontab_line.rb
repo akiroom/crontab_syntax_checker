@@ -15,6 +15,7 @@ class CrontabLine < CrontabLineBase
   @@WEEKDAY_GROUP_NUM = 5
   @@COMMAND_GROUP_NUM = 6
   @@SPACE_IN_LIST_REGEX = /\d+(-\d+(\/\d+)?)?,\s\d+/
+  @@WEEKDAY_THREE_LETTERS = %w(sun mon tue wed thu fri sat)
   def initialize
     @minute = [CrontabAsterisk.new]
     @hour = [CrontabAsterisk.new]
@@ -49,7 +50,9 @@ class CrontabLine < CrontabLineBase
       crontab.hour = md[@@HOUR_GROUP_NUM]
       crontab.day = md[@@DAY_GROUP_NUM]
       crontab.month = md[@@MONTH_GROUP_NUM]
-      crontab.weekday = md[@@WEEKDAY_GROUP_NUM]
+      weekday_md = md[@@WEEKDAY_GROUP_NUM]
+      WEEKDAY_THREE_LETTERS.each_with_index{|l, n| weekday_md.gsub!(l, n.to_s)}
+      crontab.weekday = weekday_md
       crontab.command = md[@@COMMAND_GROUP_NUM]
       crontab
     else
