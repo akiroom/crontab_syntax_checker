@@ -51,7 +51,7 @@ class CrontabLine < CrontabLineBase
       crontab.day = md[@@DAY_GROUP_NUM]
       crontab.month = md[@@MONTH_GROUP_NUM]
       weekday_md = md[@@WEEKDAY_GROUP_NUM]
-      WEEKDAY_THREE_LETTERS.each_with_index{|l, n| weekday_md.gsub!(l, n.to_s)}
+      @@WEEKDAY_THREE_LETTERS.each_with_index{|l, n| weekday_md.gsub!(l, n.to_s)}
       crontab.weekday = weekday_md
       crontab.command = md[@@COMMAND_GROUP_NUM]
       crontab
